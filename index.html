@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Do You Love Me?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff6a88,#ff99ac);
+    font-family:'Poppins', sans-serif;
+    overflow:hidden;
+}
+
+/* Main card */
+.card{
+    background:white;
+    padding:30px 25px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(0.5);}
+    to{opacity:1;transform:scale(1);}
+}
+
+h1{
+    color:#ff4b6e;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+/* Buttons */
+button{
+    padding:12px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    margin:10px;
+    font-family:'Poppins', sans-serif;
+}
+
+#yes{
+    background:#ff4b6e;
+    color:white;
+}
+
+#no{
+    background:#ddd;
+    position:absolute;
+}
+
+/* Love text */
+#loveText{
+    display:none;
+    font-family:'Pacifico', cursive;
+    font-size:36px;
+    color:#ff4b6e;
+    letter-spacing:2px;
+    animation:heartbeat 1.2s infinite;
+    text-shadow:0 0 10px rgba(255,75,110,0.6);
+}
+
+@keyframes heartbeat{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+}
+
+/* Balloons */
+.balloon{
+    position:absolute;
+    bottom:-100px;
+    width:40px;
+    height:55px;
+    border-radius:50%;
+    animation:fly 6s linear forwards;
+}
+
+.balloon::after{
+    content:"";
+    position:absolute;
+    width:2px;
+    height:30px;
+    background:#555;
+    top:55px;
+    left:50%;
+}
+
+@keyframes fly{
+    from{transform:translateY(0);}
+    to{transform:translateY(-120vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1 id="question">Do you love me?</h1>
+    <div id="buttons">
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
+    </div>
+    <div id="loveText">I Love You Forever</div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+
+function moveNo(){
+    noBtn.style.left = Math.random()*(window.innerWidth-100)+"px";
+    noBtn.style.top = Math.random()*(window.innerHeight-60)+"px";
+}
+noBtn.addEventListener("mouseover",moveNo);
+noBtn.addEventListener("touchstart",moveNo);
+
+// Yes click
+yesBtn.onclick = ()=>{
+    document.getElementById("question").style.display="none";
+    document.getElementById("buttons").style.display="none";
+    document.getElementById("loveText").style.display="block";
+    startBalloons();
+};
+
+// Balloons
+function startBalloons(){
+    for(let i=0;i<30;i++){
+        setTimeout(()=>{
+            const b=document.createElement("div");
+            b.className="balloon";
+            b.style.left=Math.random()*100+"vw";
+            b.style.background=randomColor();
+            b.style.width=30+Math.random()*20+"px";
+            b.style.height=40+Math.random()*30+"px";
+            document.body.appendChild(b);
+            setTimeout(()=>b.remove(),6000);
+        },i*180);
+    }
+}
+
+function randomColor(){
+    const colors=["#ff4b6e","#ffcc00","#6ec6ff","#81c784","#f06292"];
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+</script>
+
+</body>
+</html>
